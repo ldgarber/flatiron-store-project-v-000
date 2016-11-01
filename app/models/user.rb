@@ -4,13 +4,6 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   has_many :carts
-  @current_cart = nil
+  attr_accessor :current_cart
   
-  def current_cart=(cart)
-    @current_cart = cart
-  end
-
-  def current_cart
-    @current_cart
-  end
 end

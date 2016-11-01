@@ -12,6 +12,7 @@ class Cart < ActiveRecord::Base
     @item = Item.find(item_id)
     if self.items.include? @item 
       @line_item = self.line_items.find_by(:item_id => @item.id)
+      @line_item.increase_quantity
       return @line_item
     else
       return self.line_items.build(:item => @item, :quantity => 1) 
@@ -23,8 +24,8 @@ class Cart < ActiveRecord::Base
   end
 
   def reduce_inventories
-    items.each do |item|
-      item.reduce_inventory_by_one
+    line_items.each do |line_item|
+      line_item.item.reduce_inventory_by(line_item.quantity)
     end
   end
 end
