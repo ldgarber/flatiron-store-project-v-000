@@ -8,6 +8,12 @@
 end
 
 counter = 1
+10.times do 
+  User.create(email: "test+#{counter}@gmail.com", password: "password")
+  counter += 1
+end
+
+counter = 1
 Item.all.each do |item|
   item.category_id = counter
   item.save

@@ -1,2 +1,6 @@
 <h1><%= @item.title %></h1>
 <h2>$ <%= @item.price %></h2>
+
+<% if current_user %> 
+  <%= link_to "Add to Cart", cart_path(current_user) %> 
+<% end %> 
