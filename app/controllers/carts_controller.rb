@@ -10,7 +10,8 @@ class CartsController < ApplicationController
     @cart.reduce_inventories
     current_user.current_cart = nil
     if current_user.save
-      redirect_to cart_path(@cart) 
+      flash[:message] = "Successfully checked out"
+      redirect_to cart_path(@cart)  
     else
       flash[:error] = "couldn't check out" 
       redirect_to "/"

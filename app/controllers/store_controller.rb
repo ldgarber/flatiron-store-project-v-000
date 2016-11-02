@@ -2,6 +2,7 @@ class StoreController < ApplicationController
   #before_action :verify_logged_in, only: [:index]  
 
   def index
+    @user = current_user
     @categories = Category.all
     @items = Item.available_items
   end

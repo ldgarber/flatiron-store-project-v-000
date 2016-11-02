@@ -1,3 +1,8 @@
+<% if @user && @user.current_cart %>
+  <p><%= link_to 'Cart', cart_path(@user.current_cart) %></p>
+<% end %> 
+
+
 <% @categories.each do |category| %>
   <%= link_to category.title, category_path(category) %>
 <% end %>
