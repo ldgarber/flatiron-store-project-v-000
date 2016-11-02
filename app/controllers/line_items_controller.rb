@@ -1,17 +1,22 @@
 class LineItemsController < ApplicationController
   
   def create
-    #add line item to cart
-    @item = Item.find(params[:item_id])
-    if current_user.current_cart == nil
-      @cart = current_user.carts.create
-      current_user.current_cart = @cart
-      current_user.save
+    @user = current_user
+    @user.current_cart = Cart.new if !current_cart
+    @user.save
+
+    @line_item = current_cart.add_item(params[:item_id])
+    if @line_item.save
+      redirect_to cart_path(current_cart)
+    else
+      flash[:message] = "Error in creating line item"
+      redirect_to '/'
     end
-    @current_cart = current_user.current_cart
-    @line_item = @current_cart.add_item(@item.id)
-    @line_item.save
-    redirect_to cart_path(@current_cart)
+  end
+
+  private
+  def current_cart
+    current_user.current_cart
   end
 
 end

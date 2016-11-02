@@ -4,9 +4,8 @@
 <% @category.items.each do |item| %>
     <li><%= link_to item.title, item_path(item) %></li>
     <li>$<%=item.price.to_f/100%></li>
+    <%= button_to 'Add to Cart', line_items_path(:item_id => item.id) if user_signed_in? %> 
 <% end %>
 </ul>
 
-<% if user_signed_in? %> 
-  <%= button_to 'Add to Cart', cart_path(1) %> 
-<% end %> 
+

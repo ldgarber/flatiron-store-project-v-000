@@ -5,17 +5,20 @@ class Cart < ActiveRecord::Base
 
   def total
     sum = 0
-    items.collect {|item| item.price}.reduce(:+)
+    line_items.each do |line_item| 
+      sum += (line_item.item.price * line_item.quantity)
+    end
+    sum
   end
 
   def add_item(item_id)
     @item = Item.find(item_id)
-    if self.items.include? @item 
+    if self.items.include?(@item)
       @line_item = self.line_items.find_by(:item_id => @item.id)
       @line_item.increase_quantity
       return @line_item
     else
-      return self.line_items.build(:item => @item, :quantity => 1) 
+      return self.line_items.build(:item_id => @item.id, :quantity => 1) 
     end
   end
 
